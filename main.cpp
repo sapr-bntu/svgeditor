@@ -1,23 +1,14 @@
 #include <QtGui/QApplication>
-#include "square.h"
-#include <QtGui/QPushButton>
-#include "paintwidget.h"
+#include "qmlapplicationviewer.h"
 
-// Main method where the program starts.
-int main(int argc, char *argv[])
+Q_DECL_EXPORT int main(int argc, char *argv[])
 {
-    // Start Qt application with the given arguments.
-    QApplication a(argc, argv);
+    QScopedPointer<QApplication> app(createApplication(argc, argv));
 
-    // Set style of the aapplication to Plastique.
-    a.setStyle("plastique");
+    QmlApplicationViewer viewer;
+    viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
+    viewer.setMainQmlFile(QLatin1String("qml/paintqml2/main.qml"));
+    viewer.showExpanded();
 
-    // Create new painting widget.
-    PaintWidget *w = new PaintWidget;
-
-    // Show the widget.
-    w->show();
-
-    // Return 0 if program finishes with no crashes.
-    return a.exec();
+    return app->exec();
 }
